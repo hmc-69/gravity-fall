@@ -331,36 +331,17 @@ const FallingLettersTextarea = () => {
     };
 
     return (
-        <div className="terminal-container" ref={containerRef} style={{
-            position: 'relative',
-            width: '98vw', // Almost full width
-            maxWidth: 'none', // Remove constraint
-            margin: '0 auto',
-            minHeight: '80vh', // Use viewport height
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '20px',
-            alignItems: 'center',
-            padding: '0 20px', // Add some padding
-            boxSizing: 'border-box'
-        }}>
+        <div className="terminal-container" ref={containerRef}>
 
             {/* HUD - Timers & Stats */}
-            <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                borderBottom: '1px solid #004400',
-                paddingBottom: '10px',
-                width: '100%',
-                fontSize: '1rem'
-            }}>
-                <div style={{ display: 'flex', gap: '20px' }}>
+            <div className="hud-container">
+                <div className="hud-group">
                     <span>SCORE: {score}</span>
                     <span style={{ color: combo > 1 ? '#00ff00' : '#004400' }}>COMBO: x{combo.toFixed(1)}</span>
                     <span>WPM: {wpm}</span>
                 </div>
 
-                <div style={{ display: 'flex', gap: '20px' }}>
+                <div className="hud-group">
                     <span>SESSION: {elapsedTime.toFixed(1)}s</span>
                     <span style={{ color: inactivityTimer < 2 ? 'red' : '#00ff00' }}>
                         STABILITY: {inactivityTimer.toFixed(1)}s
@@ -369,38 +350,12 @@ const FallingLettersTextarea = () => {
             </div>
 
             {/* Split Layout Container */}
-            <div className="split-layout" style={{
-                display: 'flex',
-                flexDirection: 'row',
-                width: '100%',
-                height: '70vh', // Take up most of the screen height
-                gap: '20px',
-                flex: 1
-            }}>
+            <div className="split-layout">
                 {/* Left Panel: Target Text */}
-                <div className="left-panel" style={{
-                    flex: 1,
-                    display: 'flex',
-                    flexDirection: 'column'
-                }}>
-                    <div className="panel-header" style={{ marginBottom: '10px', color: '#008800', fontSize: '0.8rem' }}>// SOURCE DATA</div>
+                <div className="panel left-panel">
+                    <div className="panel-header">// SOURCE DATA</div>
                     {!isFalling && (
-                        <div className="target-text" style={{
-                            padding: '20px',
-                            border: '1px dashed #004400',
-                            background: '#001100',
-                            fontFamily: 'monospace',
-                            fontSize: '1.5rem',
-                            lineHeight: '1.6',
-                            whiteSpace: 'pre-wrap',
-                            textAlign: 'left',
-                            color: '#004400',
-                            userSelect: 'none',
-                            width: '100%',
-                            height: '100%', // Fill parent flex container
-                            overflowY: 'auto',
-                            boxSizing: 'border-box'
-                        }}>
+                        <div className="target-text">
                             {/* Character-level rendering for styling errors */}
                             {targetText.split('').map((char, index) => {
                                 let color = '#004400'; // Default dim
@@ -432,12 +387,8 @@ const FallingLettersTextarea = () => {
                 </div>
 
                 {/* Right Panel: Input */}
-                <div className="right-panel" style={{
-                    flex: 1,
-                    display: 'flex',
-                    flexDirection: 'column'
-                }}>
-                    <div className="panel-header" style={{ marginBottom: '10px', color: '#008800', fontSize: '0.8rem' }}>// TRANSCRIPTION FEED</div>
+                <div className="panel right-panel">
+                    <div className="panel-header">// TRANSCRIPTION FEED</div>
                     {!isFalling && (
                         <textarea
                             ref={textareaRef}
@@ -448,22 +399,8 @@ const FallingLettersTextarea = () => {
                             autoFocus={gameStarted}
                             placeholder={gameStarted ? "INITIATE TRANSCRIPTION..." : "AWAITING START SIGNAL..."}
                             spellCheck="false"
-                            style={{
-                                width: '100%',
-                                height: '100%', // Fill parent flex container
-                                background: '#000000',
-                                border: '2px solid #00ff00',
-                                color: '#00ff00',
-                                fontFamily: 'monospace',
-                                fontSize: '1.5rem',
-                                padding: '20px',
-                                outline: 'none',
-                                caretColor: '#00ff00',
-                                resize: 'none',
-                                opacity: gameStarted ? 1 : 0.5,
-                                boxSizing: 'border-box',
-                                lineHeight: '1.6'
-                            }}
+                            className="input-textarea"
+                            style={{ opacity: gameStarted ? 1 : 0.5 }}
                         />
                     )}
                 </div>
@@ -472,27 +409,10 @@ const FallingLettersTextarea = () => {
             {/* Start Button Overlay */}
             {
                 !gameStarted && !isFalling && (
-                    <div style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        textAlign: 'center',
-                        zIndex: 50,
-                        width: '100%'
-                    }}>
+                    <div className="start-button-overlay">
                         <button
                             onClick={startGame}
-                            style={{
-                                background: 'black',
-                                color: '#00ff00',
-                                border: '2px solid #00ff00',
-                                padding: '20px 40px',
-                                fontSize: '2rem',
-                                fontFamily: 'monospace',
-                                cursor: 'pointer',
-                                boxShadow: '0 0 30px #005500'
-                            }}
+                            className="glitch-button"
                         >
                             INITIALIZE_LINK
                         </button>
@@ -504,20 +424,7 @@ const FallingLettersTextarea = () => {
             {/* Compliment Toast */}
             {
                 compliment && (
-                    <div style={{
-                        position: 'fixed',
-                        top: '20%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        color: '#00ff00',
-                        background: 'black',
-                        border: '2px solid #00ff00',
-                        padding: '20px',
-                        fontFamily: 'monospace',
-                        fontSize: '2rem',
-                        zIndex: 1000,
-                        boxShadow: '0 0 20px #00ff00'
-                    }}>
+                    <div className="compliment-toast">
                         {compliment}
                     </div>
                 )
@@ -529,20 +436,11 @@ const FallingLettersTextarea = () => {
                     <div
                         key={l.id}
                         ref={el => letterRefs.current[l.id] = el}
+                        className="falling-letter"
                         style={{
-                            position: 'fixed',
-                            top: 0, left: 0,
                             width: `${l.width}px`,
                             height: `${l.height}px`,
-                            color: '#00ff00',
-                            fontFamily: 'monospace',
-                            fontSize: '1.2rem', // Fixed size since textarea logic might be complex
-                            pointerEvents: 'none',
-                            transform: `translate(${l.x}px, ${l.y}px)`,
-                            textShadow: '0 0 5px #00ff00',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center'
+                            transform: `translate(${l.x}px, ${l.y}px)`
                         }}
                     >
                         {l.char}
@@ -558,21 +456,7 @@ const FallingLettersTextarea = () => {
                             setTargetText(PARAGRAPHS[Math.floor(Math.random() * PARAGRAPHS.length)]);
                             startGame();
                         }}
-                        style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            background: 'black',
-                            color: '#ff0000',
-                            border: '2px solid #ff0000',
-                            padding: '20px',
-                            fontSize: '2rem',
-                            fontFamily: 'monospace',
-                            cursor: 'pointer',
-                            zIndex: 200,
-                            boxShadow: '0 0 20px #ff0000'
-                        }}
+                        className="crash-retry-button"
                     >
                         SYSTEM CRASHED. RETRY?
                     </button>
