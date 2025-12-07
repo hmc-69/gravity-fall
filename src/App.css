@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+  background-color: #000000;
+  color: #00ff00;
+  font-family: 'Courier New', Courier, monospace;
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.App {
+  width: 100%;
+  max-width: none;
+  padding: 1rem;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+h1 {
+  text-shadow: 0 0 10px #00ff00;
+  margin-bottom: 2rem;
+}
+
+textarea::selection {
+  background: #004400;
+  color: #00ff00;
+}
+
+button:hover {
+  background: #003300 !important;
+}
